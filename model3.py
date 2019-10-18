@@ -1,201 +1,85 @@
 import pandas as pd
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
-from scipy.sparse import csr_matrix
-import warnings
-from sklearn.metrics.pairwise import euclidean_distances
-from lightfm import LightFM
-from lightfm.evaluation import precision_at_k
-from lightfm.evaluation import auc_score
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.neighbors import NearestNeighbors
+from sklearn.base import BaseEstimator
+from sklearn.pipeline import make_pipeline
 
-warnings.filterwarnings("ignore", category=UserWarning)
-
-# Quick Data Prep
+# DATA
 
 df = pd.read_csv('data/stars.csv')
-df = df.rename(columns={'stargazers': 'stars'})
 df = df[df['repo'] != 'maxhumber/gazpacho']
+popular = pd.DataFrame(df['repo'].value_counts())
+select_repos = popular[popular['repo'] >= 3].index.tolist()
+df = df[df['repo'].isin(select_repos)]
 
-# users = df.user.unique()
-# i = int(users.shape[0] * 0.80 // 1)
-# train = df[df['user'].isin(users[:i])]
-# test = df[df['user'].isin(users[i:])]
+df = df.groupby(['user'])['repo'].apply(lambda x: ','.join(x))
+df = pd.DataFrame(df)
 
-class Encoder:
+# MODEL
 
-    def __init__(self):
-        self.items = None
+class NN(NearestNeighbors, BaseEstimator):
+    def __init__(self, n_neighbors, metric):
+        super().__init__(n_neighbors, metric)
 
-    def transform(self, lst):
-        """Returns a dictionary where the keys are the users_ids and the values are the encoded items"""
-        if self.items is None:
-            self.items = self.__items(lst)
+    def fit(self, X, y=None):
+        super().fit(X, y)
+    
+    def predict(self, X):
+        i, n = super().kneighbors(X)
+        return n
 
-        users = {}
-        for item, user in lst:
-            users.setdefault(user, set()).add(item)
+cvec = CountVectorizer(tokenizer=lambda x: x.split(','), max_features=1000)
+model = NearestNeighbors(n_neighbors=5, metric='euclidean')
+X = cvec.fit_transform(df['repo'])
+model.fit(X)
+distances, indices = model.kneighbors(X)
 
-        return {user: np.array([item in basket for item in self.items], dtype=np.uint8) for user, basket in users.items()}
-
-    def reset(self):
-        self.items = None
-
-    @staticmethod
-    def __items(lst):
-        seen = set()
-        items = []
-        for item, _ in lst:
-            if item not in seen:
-                items.append(item)
-                seen.add(item)
-        return items
+cvec = CountVectorizer(tokenizer=lambda x: x.split(','), max_features=1000)
+nn = NN(n_neighbors=5, metric='euclidean')
+pipe = make_pipeline(cvec, nn)
+pipe.fit(df['repo'])
+pipe.predict(df['repo'])
 
 
-df = pd.DataFrame([
-    ['marc'],
-    ['gazpacho, marc'],
-    ['gazpacho, chart'],
-    ['chart, mummify']
-])
+# PREDICT
 
-df = pd.DataFrame([
-    ['a', 1],
-    ['b', 1],
-    ['c', 1],
-    ['a', 2],
-    ['c', 3],
-    ['b', 4],
-    ['c', 4]
-], columns=['item', 'user'])
-df
+user = 'garrrychan'
+i = list(df.index).index(user)
 
-pd.DataFrame([
-    [1, 1, 1],
-    [1, 0, 0],
-    [0, 0, 1],
-    [0, 1, 1]
-], columns=['a', 'b', 'c'])
+neighbors = indices[i]
+starred = df.iloc[neighbors[0]]['repo'].split(',')
 
-new_user = [['c', 5], ['d', 5]]
+repos = []
+for n in neighbors:
+    r = df.iloc[n]['repo'].split(',')
+    repos.extend(r)
 
-[0, 0, 1]
+rec = [r for r in repos if r not in starred]
 
+popular[popular.index.isin(rec)]
 
-df = pd.DataFrame([
-    [1, 1, 0, 0, 0],
-    [1, 1, 1, 1, 1],
-    [1, 0, 1, 0, 0],
-    [0, 0, 1, 0, 0],
-    [1, 0, 1, 1, 0],
-    [0, 0, 0, 1, 1]
-], columns = ['gazpacho', 'mummify', 'marc', 'chart', 'sausage link'])
+# new user
 
-from sklearn.neighbors import NearestNeighbors
-model = NearestNeighbors(n_neighbors=5, algorithm='ball_tree')
-model.fit(df)
-distances, indices = model.kneighbors(df)
-distances, indices
+df.iloc[100:101].to_dict(orient='list')
 
-new = [0, 0, 0, 1, 1]
-_, indices = model.kneighbors([new])
-indices
+new = pd.DataFrame({
+    'repo': ['networkx/networkx,streamlit/streamlit,huggingface/transformers,plasticityai/supersqlite,encode/httpx,aws/chalice,uber/causalml']
+})
+
+X_new = cvec.transform(new)
+distances, indices = model.kneighbors(X_new)
+neighbors = indices[0]
+
+def recommend(neighbors):
+    starred = df.iloc[neighbors[0]]['repo'].split(',')
+    repos = []
+    for n in neighbors:
+        r = df.iloc[n]['repo'].split(',')
+        repos.extend(r)
+    rec = [r for r in repos if r not in starred]
+    return popular[popular.index.isin(rec)]
+
+recommend(neighbors)
 
 
-
-
-
-
-from sklearn.feature_extraction.text import CountVectorizer
-
-train.repo.unique().shape
-
-cvec = CountVectorizer()
-
-encoder = LabelBinzarizer()
-X_train = encoder.fit_transform(train['repo'])
-X_train.shape
-
-train['rating'] = 1
-
-df = train.pivot(
-    index='user',
-    columns='repo',
-    values='rating'
-).fillna(0)
-
-# The Magic
-
-class InteractionMachine:
-
-    def __init__(self, df, ratings, users, items):
-        self._ratings = np.array(df[ratings])
-        self._users = np.array(df[users])
-        self._items = np.array(df[items])
-        # heavy lifting encoders
-        self.user_encoder = LabelEncoder()
-        self.item_encoder = LabelEncoder()
-        # preparation for the csr matrix
-        u = self.user_encoder.fit_transform(self._users)
-        i = self.item_encoder.fit_transform(self._items)
-        lu = len(np.unique(u))
-        li = len(np.unique(i))
-        # the good stuff
-        self.interactions = csr_matrix((self._ratings, (u, i)), shape=(lu, li))
-
-    def get_users(self, encoded=False):
-        users = np.unique(self._users)
-        if encoded:
-            users = self.user_encoder.transform(users)
-        return users
-
-    def get_items(self, encoded=False):
-        items = np.unique(self._items)
-        if encoded:
-            items = self.item_encoder.transform(items)
-        return items
-
-im = InteractionMachine(df, 'stargazers', 'user', 'repo')
-
-
-df2 = pd.DataFrame(
-    im.interactions.todense(),
-    index = im.get_users(),
-    columns = im.get_items()
-)
-
-from sklearn.neighbors import NearestNeighbors
-model = NearestNeighbors(metric='cosine', algorithm='brute', n_neighbors=20, n_jobs=-1)
-
-model.predict
-
-
-
-model = LightFM(learning_rate=0.05, loss='warp')
-
-model.fit(im.interactions, epochs=30)
-
-person = 'garrrychan'
-person = 'mackenzie-gray'
-user_id = im.user_encoder.transform([person])[0]
-preds = model.predict(user_id, im.get_items(encoded=True))
-
-pred_df = pd.DataFrame({
-    'product': im.get_items(),
-    'rating': preds
-}).sort_values('rating', ascending=False)
-pred_df
-
-precision_at_k(model, im.interactions, k=10).mean()
-auc_score(model, im.interactions).mean()
-
-pred_df
-
-reco = pred_df['product'].values.tolist()
-
-tried = df[df['user'] == person]['product'].tolist()
-
-[candy for candy in reco if candy not in tried][:5]
-
-
-person = 'kitkatkittikat'
-df[df['user'] == person]
+#
