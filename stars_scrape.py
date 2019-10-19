@@ -1,7 +1,5 @@
 from gazpacho import get, Soup
 
-url = 'https://github.com/maxhumber/gazpacho/stargazers'
-
 def make_soup(url):
     html = get(url)
     soup = Soup(html)
@@ -20,6 +18,9 @@ def scrape_users(soup):
     users = [u.attrs['href'][1:] for u in users]
     return users
 
-soup = make_soup(url)
-url = get_next_url(soup)
-users = scrape_users(soup)
+if __name__ == '__main__':
+    
+    url = 'https://github.com/maxhumber/gazpacho/stargazers'
+    soup = make_soup(url)
+    url = get_next_url(soup)
+    users = scrape_users(soup)

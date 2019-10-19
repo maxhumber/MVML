@@ -1,9 +1,8 @@
+import dill
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.neighbors import NearestNeighbors
-from sklearn.base import BaseEstimator
-from sklearn.pipeline import make_pipeline
-import dill
+
 
 # DATA
 
