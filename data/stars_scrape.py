@@ -6,21 +6,25 @@ def make_soup(url):
     return soup
 
 def get_next_url(soup):
-    buttons = soup.find('div', mode='all', attrs={'class': 'BtnGroup', 'data-test-selector': "pagination"})
-    button = buttons[-1].find('a', mode='all')[-1]
-    if button.text == 'Next':
-        return button.attrs['href']
+    buttons = soup.find(
+        "div",
+        mode="all",
+        attrs={"class": "BtnGroup", "data-test-selector": "pagination"},
+    )
+    button = buttons[-1].find("a", mode="all")[-1]
+    if button.text == "Next":
+        return button.attrs["href"]
     return None
 
 def scrape_users(soup):
-    users = soup.find('div', {'class': 'follower-list-align-top d-inline-block ml-3'})
-    users = [u.find('a', {'data-hovercard-type': 'user'}) for u in users]
-    users = [u.attrs['href'][1:] for u in users]
+    users = soup.find("div", {"class": "follower-list-align-top d-inline-block ml-3"})
+    users = [u.find("a", {"data-hovercard-type": "user"}) for u in users]
+    users = [u.attrs["href"][1:] for u in users]
     return users
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    url = 'https://github.com/maxhumber/gazpacho/stargazers'
+    url = "https://github.com/maxhumber/gazpacho/stargazers"
     soup = make_soup(url)
     url = get_next_url(soup)
     users = scrape_users(soup)
