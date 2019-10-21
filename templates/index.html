@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<form action = "/result" method="POST">
+  <div class="form-group">
+    <label for="inputlg">Repos</label>
+    <input class="form-control input-lg" id="inputlg" type="text" name="repos" value="{{ random_repos }}" />
+  </div>
+  <p><input type ="submit" value="submit"/></p>
+</form>
+{% endblock %}

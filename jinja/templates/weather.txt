@@ -1,0 +1,5 @@
+{% if rain %}
+Bring an umbrella!
+{% else %}
+Sun's out, guns out 💪
+{% endif %}
