@@ -1,15 +1,14 @@
-Deploy to Heroku Instructions
+### Deploy to Heroku Instructions
 
 ```
-python -m venv env
-source env/bin/activate
-pip install pandas numpy flask matplotlib scikit-learn sklearn-pandas gunicorn
+pipenv install scikit-learn pandas dill flask gunicorn
+pipenv run python model.py
 touch Procfile
 echo "web: gunicorn app:app --log-file -" >> Procfile
-pip freeze > requirements.txt
+pipenv run pip freeze > requirements.txt
+git init # if not already a git repo
 heroku login
-git init
-heroku git:remote -a wealth-1
+heroku git:remote -a repomatic3000
 git add .
 git commit -m '🚀'
 git push heroku master
