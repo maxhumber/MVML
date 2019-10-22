@@ -3,6 +3,8 @@ from sklearn.neighbors import NearestNeighbors
 import pandas as pd
 import dill
 
+import mummify
+
 df = pd.read_csv("data/stars.csv")
 df = df[df["repo"] != "maxhumber/gazpacho"]
 df = df[df.language.isin(["Python", "Jupyter Notebook"])]
@@ -40,18 +42,12 @@ class NNRecommender:
             Xp.append(repos)
         return Xp
 
-
-model = NNRecommender()
+n_neighbors = 10
+max_features = 1000
+model = NNRecommender(n_neighbors, max_features)
 model.fit(df["repo"])
-model.predict(df["repo"])
 
 with open("model/model.pkl", "wb") as f:
     dill.dump(model, f)
 
-del model
-
-with open("model/model.pkl", "rb") as f:
-    model = dill.load(f)
-
-model.predict(df["repo"])
-model.predict(["streamlit/streamlit,encode/httpx,aws/chalice,maxhumber/chart"])
+mummify.log(f'n_neighbors={n_neighbors}, max_features={max_features}')
