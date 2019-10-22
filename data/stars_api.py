@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 import requests
 
-load_dotenv()
+load_dotenv(dotenv_path='data/.env')
 
 # https://github.com/user/settings/tokens
 
@@ -16,7 +16,6 @@ session = requests.Session()
 session.auth = (username, token)
 
 # STARGAZERS - GET /repos/:owner/:repo/stargazers
-
 
 def get_repo_stargazers(owner, repo):
     page = 1
@@ -35,7 +34,6 @@ def get_repo_stargazers(owner, repo):
 
 
 # STARRED REPOS
-
 
 def parse_repo(repo, user):
     return {
@@ -69,14 +67,16 @@ def get_user_stars(user):
 
 if __name__ == "__main__":
 
+    # uncomment for full script
     owner = "maxhumber"
     repo = "gazpacho"
     stargazers = get_repo_stargazers(owner, repo)
 
     all_stars = []
-    for user in tqdm(stargazers):
+    # for user in tqdm(stargazers):
+    for user in tqdm(stargazers[:3]):
         all_stars.extend(get_user_stars(user))
         time.sleep(0.75)
 
-    df = pd.DataFrame(all_stars)
-    df.to_csv("data/stars.csv", encoding="utf-8", index=False)
+    # df = pd.DataFrame(all_stars)
+    # df.to_csv("data/stars.csv", encoding="utf-8", index=False)

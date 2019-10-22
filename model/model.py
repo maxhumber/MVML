@@ -3,8 +3,6 @@ from sklearn.neighbors import NearestNeighbors
 import pandas as pd
 import dill
 
-import mummify
-
 df = pd.read_csv("data/stars.csv")
 df = df[df["repo"] != "maxhumber/gazpacho"]
 df = df[df.language.isin(["Python", "Jupyter Notebook"])]
@@ -49,5 +47,3 @@ model.fit(df["repo"])
 
 with open("model/model.pkl", "wb") as f:
     dill.dump(model, f)
-
-mummify.log(f'n_neighbors={n_neighbors}, max_features={max_features}')
