@@ -28,3 +28,5 @@ if __name__ == "__main__":
     soup = make_soup(url)
     url = get_next_url(soup)
     users = scrape_users(soup)
+
+    # add scrape one user example
