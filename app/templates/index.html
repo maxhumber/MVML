@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<form action = "/result" method="POST">
+  <h3>📦 you already like</h3>
+  <br />
+  <div class="form-group">
+    <textarea class="form-control" rows="3" type="text" name="repos" placeholder="{{ random_repos }}"></textarea>
+    <!-- <input class="form-control input-lg" id="inputlg" type="text" name="repos" value="{{ random_repos }}" /> -->
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Go</button>
+</form>
+{% endblock %}
