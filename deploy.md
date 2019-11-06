@@ -66,8 +66,8 @@ ssh root@142.93.XXX.104
 4. Update everything:
 
 ```
-sudo apt update
-sudo apt -y upgrade
+sudo apt update # skip
+sudo apt -y upgrade # skip
 sudo apt install make
 sudo apt install unzip
 ```
@@ -75,7 +75,7 @@ sudo apt install unzip
 5. Get new monitoring:
 
 ```
-curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash
+curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash # skip
 ```
 
 6. Create a new user:
@@ -97,7 +97,7 @@ rsync --archive --chown=mvml:mvml ~/.ssh /home/mvml
 8. Sign in with the new user:
 
 ```
-ssh ninja@142.93.XXX.104
+ssh mvml@142.93.XXX.104
 ```
 
 #### Get the app on the machine
@@ -107,7 +107,7 @@ ssh ninja@142.93.XXX.104
 ```
 wget https://github.com/maxhumber/mvml/archive/master.zip
 unzip master.zip
-mv mvml-master repomatic
+mv MVML-master repomatic
 rm -f master.zip
 ```
 
