@@ -1,0 +1,3 @@
+import mummify
+
+mummify.log()
