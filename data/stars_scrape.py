@@ -22,11 +22,18 @@ def scrape_users(soup):
     users = [u.attrs["href"][1:] for u in users]
     return users
 
+
+
 if __name__ == "__main__":
 
+    # user list
     url = "https://github.com/maxhumber/gazpacho/stargazers"
     soup = make_soup(url)
     url = get_next_url(soup)
     users = scrape_users(soup)
 
-    # add scrape one user example
+    # one user
+    url = 'https://github.com/garrrychan?page=2&tab=stars'
+    soup = make_soup(url)
+    divs = soup.find('div', {'class': 'd-inline-block mb-1'})
+    repos = [d.find('a').attrs['href'] for d in divs]
