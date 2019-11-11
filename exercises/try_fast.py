@@ -3,6 +3,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression, RANSACRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_regression
+import dill
 import mummify
 
 n_samples = 1000
@@ -27,5 +28,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = LinearRegression()
 model.fit(X_train, y_train)
 model.score(X_test, y_test)
+
+with open('exercises/regression.pkl', 'wb') as f:
+    dill.dump(model, f)
 
 mummify.log('')
