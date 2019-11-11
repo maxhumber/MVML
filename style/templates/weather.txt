@@ -1,0 +1,5 @@
+{% if snow %}
+Bring out your parka
+{% else %}
+Sun's out, guns out 💪
+{% endif %}
