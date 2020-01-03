@@ -1,3 +1,0 @@
-{% for package in packages %}
-• {{ package }}
-{% endfor %}
