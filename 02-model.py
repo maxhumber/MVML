@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelBinarizer
 from sklearn_pandas import DataFrameMapper
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, Lasso, RANSACRegressor
 
 import mummify
 
