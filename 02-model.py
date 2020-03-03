@@ -53,4 +53,4 @@ score = pipe.score(X_test, y_test)
 with open('pipe.pkl', 'wb') as f:
     pickle.dump(pipe, f)
 
-mummify.log(f'R2 Score: {score}')
+mummify.log(f'R2 Score: {round(score, 4)}')
