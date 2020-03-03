@@ -1,26 +1,37 @@
 import pickle
 import random
 from flask import Flask, request, render_template
+from sklearn.base import TransformerMixin
+import pandas as pd
 
 app = Flask(__name__, template_folder="templates_basic")
 
-with open("model/model.pkl", "rb") as f:
-    import dill
-    model = dill.load(f)
+class DateEncoder(TransformerMixin):
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X):
+        month = X.dt.month
+        day_of_week = X.dt.dayofweek
+        return pd.concat([month, day_of_week], axis=1)
+
+with open("pipe.pkl", "rb") as f:
+    pipe = pickle.load(f)
 
 @app.route("/")
 def index():
-    repos = model.cv.get_feature_names()
-    random_repos = ", ".join(random.choices(repos, k=5))
-    return render_template("index.html", random_repos=random_repos)
+    return render_template("index.html")
 
 @app.route("/result", methods=["POST"])
 def predict():
-    repos = request.form["repos"]
-    repos = ",".join([r.strip() for r in repos.split(",")])
-    suggestions = model.predict([repos])[0]
-    random.shuffle(suggestions)
-    return render_template("result.html", suggestions=suggestions[:5])
+    form = request.form
+    new = pd.DataFrame({
+        'date': [pd.Timestamp(form['date'])],
+        'origin': [form['origin']],
+        'destination': [form['destination']],
+        'stops': [form['stops']]
+    })
+    price = round(float(pipe.predict(new)[0]), 2)
+    return render_template("result.html", price=price)
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
