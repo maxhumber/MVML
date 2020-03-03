@@ -1,4 +1,5 @@
 # from https://scikit-learn.org/stable/auto_examples/linear_model/plot_ransac.html
+import pickle
 import numpy as np
 from sklearn.linear_model import LinearRegression, RANSACRegressor
 from sklearn.model_selection import train_test_split
@@ -27,5 +28,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 model = LinearRegression()
 model.fit(X_train, y_train)
 model.score(X_test, y_test)
+
+with open('exercises/model.pkl', 'wb') as f:
+    pickle.dump(model, f)
 
 mummify.log('') # put something in here
