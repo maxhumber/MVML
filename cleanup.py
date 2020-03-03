@@ -1,5 +1,3 @@
-import os
-import shutil
+import subprocess
 
-os.remove('mummify.log')
-shutil.rmtree('.mummify')
+subprocess.run('rm -rf mummify.log .mummify', shell=True)
