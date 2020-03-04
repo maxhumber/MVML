@@ -62,12 +62,22 @@ git init
 heroku login
 ```
 
-11. Create a project in the Heroku Web Panel
-
-12. Add your repo to the Heroku project:
+11. Create a project:
 
 ```
-heroku git:remote -a flightomatic3000
+heroku create
+```
+
+12. Test it locally
+
+```
+heroku local
+```
+
+12. Add your repo to the randomly generated project:
+
+```
+heroku git:remote -a young-sea-43650
 ```
 
 13. add, commit push:
