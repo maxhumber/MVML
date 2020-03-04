@@ -10,7 +10,7 @@ source .venv/bin/activate
 2. Install required dependencies:
 
 ```
-pip install gunicorn flask scikit-learn pandas mummify
+pip install gunicorn flask scikit-learn pandas xlrd sklearn_pandas mummify 
 ```
 
 3. Freeze the dependencies:
@@ -25,28 +25,39 @@ pip freeze > requirements.txt
 python 02-model.py
 ```
 
+5. Make sure the app still works locally:
 
+```
+python 05-app.py
+```
 
-4. Create a `Procfile`:
+6. Deactivate the virtual environment:
+
+```
+deactivate
+```
+
+7. Create a `Procfile`:
 
 ```
 touch Procfile
-echo "web: gunicorn app:app --log-file -" >> Procfile
+echo "web: gunicorn 05-app:app --log-file -" >> Procfile
 ```
 
-3. (Sometimes) If your project isn't already a git repo, make it one:
+8. If your project isn't already a git repo, make it one:
 
 ```
 git init
 ```
 
-4. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
+9. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```
 heroku login
 ```
 
-5. Create a project in the Heroku Web Panel
+10. Create a project in the Heroku Web Panel
+
 6. Add your repo to the Heroku project:
 
 ```
