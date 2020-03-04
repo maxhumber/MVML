@@ -1,4 +1,4 @@
-## Deploy: Heroku
+### Deploy Heroku
 
 1. Setup a virtual environment:
 
