@@ -1,17 +1,19 @@
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
-from sklearn.base import TransformerMixin
 
 app = Flask(__name__, template_folder="templates_basic")
 
-class DateEncoder(TransformerMixin):
+class DateEncoder:
     def fit(self, X, y=None):
         return self
     def transform(self, X):
         month = X.dt.month
         day_of_week = X.dt.dayofweek
         return pd.concat([month, day_of_week], axis=1)
+    def fit_transform(self, X, y=None):
+        self.fit(X)
+        return self.transform(X)
 
 with open("pipe.pkl", "rb") as f:
     pipe = pickle.load(f)
