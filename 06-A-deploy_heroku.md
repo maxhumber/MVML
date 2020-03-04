@@ -43,46 +43,46 @@ python --version
 echo "python-3.7.4" >> runtime.txt
 ```
 
-7. Deactivate the virtual environment:
-
-```
-deactivate
-```
-
-8. Create a `Procfile`:
+7. Create a `Procfile`:
 
 ```
 echo "web: gunicorn 05-app:app --log-file -" >> Procfile
 ```
 
-9. If your project isn't already a git repo, make it one:
+8. If your project isn't already a git repo, make it one:
 
 ```
 git init
 ```
 
-10. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
+9. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```
 heroku login
 ```
 
-11. Create a project:
+10. Create a project:
 
 ```
 heroku create
 ```
 
-12. Add a remote to the randomly generated project:
+11. Add a remote to the randomly generated project:
 
 ```
-heroku git:remote -a fast-shore-73006
+heroku git:remote -a silly-words-009900
 ```
 
-13. Test the app locally:
+12. Test the app locally:
 
 ```
 heroku local
+```
+
+13. (Optional) Deactivate the virtual environment:
+
+```
+deactivate
 ```
 
 14. add, commit push:
