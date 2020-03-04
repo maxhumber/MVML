@@ -31,40 +31,46 @@ python 02-model.py
 python 05-app.py
 ```
 
-6. Deactivate the virtual environment:
+6. Specify a python runtime:
+
+```
+python --version > runtime.txt
+```
+
+7. Deactivate the virtual environment:
 
 ```
 deactivate
 ```
 
-7. Create a `Procfile`:
+8. Create a `Procfile`:
 
 ```
 touch Procfile
 echo "web: gunicorn 05-app:app --log-file -" >> Procfile
 ```
 
-8. If your project isn't already a git repo, make it one:
+9. If your project isn't already a git repo, make it one:
 
 ```
 git init
 ```
 
-9. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
+10. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
 
 ```
 heroku login
 ```
 
-10. Create a project in the Heroku Web Panel
+11. Create a project in the Heroku Web Panel
 
-11. Add your repo to the Heroku project:
+12. Add your repo to the Heroku project:
 
 ```
 heroku git:remote -a flightomatic3000
 ```
 
-7. add, commit push:
+13. add, commit push:
 
 ```
 git add .
@@ -72,4 +78,4 @@ git commit -m '🚀'
 git push heroku master
 ```
 
-8. Visit the website and make sure it works!
+14. Visit the website and make sure it works!
