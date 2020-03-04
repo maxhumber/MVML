@@ -4,10 +4,15 @@
 
 ```
 python -m venv .venv
+```
+
+2. Activate it:
+
+```
 source .venv/bin/activate
 ```
 
-2. Install required dependencies:
+3. Install app and model dependencies (`gunicorn` will always be required):
 
 ```
 pip install gunicorn flask scikit-learn pandas xlrd sklearn_pandas mummify 
@@ -34,7 +39,7 @@ python 05-app.py
 6. Specify a python runtime:
 
 ```
-python --version 
+python --version
 echo "python-3.7.4" >> runtime.txt
 ```
 
@@ -68,19 +73,19 @@ heroku login
 heroku create
 ```
 
-12. Test it locally
+12. Add a remote to the randomly generated project:
+
+```
+heroku git:remote -a fast-shore-73006
+```
+
+13. Test the app locally:
 
 ```
 heroku local
 ```
 
-12. Add your repo to the randomly generated project:
-
-```
-heroku git:remote -a young-sea-43650
-```
-
-13. add, commit push:
+14. add, commit push:
 
 ```
 git add .
@@ -88,4 +93,4 @@ git commit -m '🚀'
 git push heroku master
 ```
 
-14. Visit the website and make sure it works!
+15. Click on the url and make sure it works!
