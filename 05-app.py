@@ -4,7 +4,7 @@ from flask import Flask, request, render_template
 from sklearn.base import TransformerMixin
 import pandas as pd
 
-app = Flask(__name__, template_folder="templates_basic")
+app = Flask(__name__, template_folder="templates")
 
 class DateEncoder(TransformerMixin):
     def fit(self, X, y=None):
@@ -30,7 +30,8 @@ def predict():
         'destination': [form['destination']],
         'stops': [form['stops']]
     })
-    price = round(float(pipe.predict(new)[0]), 2)
+    price = int(round(pipe.predict(new)[0], -1))
+    price = "${:,.2f}".format(price)
     return render_template("result.html", price=price)
 
 if __name__ == "__main__":
