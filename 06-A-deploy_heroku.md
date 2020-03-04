@@ -34,7 +34,8 @@ python 05-app.py
 6. Specify a python runtime:
 
 ```
-python --version > runtime.txt
+python --version 
+echo "python-3.7.4" >> runtime.txt
 ```
 
 7. Deactivate the virtual environment:
@@ -46,7 +47,6 @@ deactivate
 8. Create a `Procfile`:
 
 ```
-touch Procfile
 echo "web: gunicorn 05-app:app --log-file -" >> Procfile
 ```
 
