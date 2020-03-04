@@ -1,10 +1,9 @@
 import pickle
-import random
 from flask import Flask, request, render_template
-from sklearn.base import TransformerMixin
 import pandas as pd
+from sklearn.base import TransformerMixin
 
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, template_folder="templates_basic")
 
 class DateEncoder(TransformerMixin):
     def fit(self, X, y=None):
