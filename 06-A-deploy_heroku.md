@@ -58,10 +58,10 @@ heroku login
 
 10. Create a project in the Heroku Web Panel
 
-6. Add your repo to the Heroku project:
+11. Add your repo to the Heroku project:
 
 ```
-heroku git:remote -a repomatic3000
+heroku git:remote -a flightomatic3000
 ```
 
 7. add, commit push:
