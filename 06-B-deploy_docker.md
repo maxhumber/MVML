@@ -10,7 +10,7 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.7
 
 COPY ./app /app
-RUN pip install --r requirements.txt
+RUN pip install -r requirements.txt
 ```
 
 4. Test it locally:
@@ -25,38 +25,46 @@ flask run
 
 **Initial Server Setup**
 
-2. Configure DigitalOcean Docker Image
+5. Spin up a DigitalOcean Docker Image from the "Marketplace"
 
-3. ssh into the machine:
+6. ssh into the machine:
 
 ```
 ssh root@142.93.XXX.104
 ```
 
-4. Update everything:
+7. (Optional) Update everything:
 
 ```
-sudo apt update # skip
-sudo apt -y upgrade # skip
-sudo apt install make
-sudo apt install unzip
+sudo apt update
+sudo apt -y upgrade
 ```
 
-5. Get new monitoring:
+8. (Optional) Get "new" monitoring:
 
 ```
 curl -sSL https://repos.insights.digitalocean.com/install.sh | sudo bash # skip
 ```
 
-6. Create a new user:
+9. Install `make` and `unzip`:
+
+```
+sudo apt install make unzip
+```
+
+10. Create a new user:
 
 ```
 adduser mvml
 ```
 
-> enter password
+> Enter password
+>
+> Leave everything else blank
+>
+> Enter Y
 
-7. Adjust permissions:
+11. Adjust new user permissions:
 
 ```
 usermod -aG sudo mvml
@@ -64,41 +72,55 @@ sudo usermod -aG docker mvml
 rsync --archive --chown=mvml:mvml ~/.ssh /home/mvml
 ```
 
-8. Sign in with the new user:
+12. Sign in with the new user:
 
 ```
 ssh mvml@142.93.XXX.104
 ```
 
-#### Get the app on the machine
+**Download the App to the Server**
 
-9. Run the following commands:
+13. If your app is hosted on GitHub you can download it with:
 
 ```
 wget https://github.com/maxhumber/mvml/archive/master.zip
+```
+
+14. Unzip and rename (I've called this app `flightomatic`:
+
+```
 unzip master.zip
-mv MVML-master repomatic
+mv MVML-master flightomatic
 rm -f master.zip
 ```
 
-#### Build and start Docker
+**Build and Start Docker**
 
-10. Run the following:
+15. Move into the app:
 
 ```
-cd repomatic
-make build
-make run
+cd flightomatic
+```
+
+16. Build the app image:
+
+```
+docker build -t appimage .
+```
+
+17. Run the app:
+
+```
+docker run -d --name appcontainer -p 80:80 appimage
 ```
 
 
 
-build:
-	docker build -t appimage .
-run:
-	docker run -d --name appcontainer -p 80:80 appimage
-stop:
-	docker stop appcontainer
-cleanup:
-	docker rmi -f appimage &&\
-	docker rm appcontainer
+17. 
+18. run:
+    	
+    stop:
+    	docker stop appcontainer
+    cleanup:
+    	docker rmi -f appimage &&\
+    	docker rm appcontainer
