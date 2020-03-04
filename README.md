@@ -1,5 +1,8 @@
-### ⭕️ Minimum Viable Machine Learning
+![O'Reilly home](https://cdn.oreillystatic.com/images/sitewide-headers/oreilly_logo_mark_red.svg)
 
-Materials for the O'Reilly Online Live Training
 
-Presented by Max Humber on December 6, 2019
+### Minimum Viable Machine Learning
+
+Materials for the Live Online Training
+
+Presented by Max Humber on March 9, 2020 
