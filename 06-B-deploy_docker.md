@@ -1,10 +1,29 @@
+### Deploy: Docker
 
+**Docker Container**
 
-#### Docker Container Instructions
+1. Check out the [uwsgi-nginx-flask-docker](https://github.com/tiangolo/uwsgi-nginx-flask-docker) image documentation
+2. Make sure your app conforms to the exact `app/` > `main.py` > `app()` structure as specified above
+3. Create a `Dockerfile` with:
 
-1. [uwsgi-nginx-flask-docker](https://github.com/tiangolo/uwsgi-nginx-flask-docker)
+```
+FROM tiangolo/uwsgi-nginx-flask:python3.7
 
-#### Initial Server Setup
+COPY ./app /app
+RUN pip install --r requirements.txt
+```
+
+4. Test it locally:
+
+```
+cd app &&\
+export FLASK_APP=main &&\
+export FLASK_RUN_PORT=8000 &&\
+export FLASK_ENV=development &&\
+flask run
+```
+
+**Initial Server Setup**
 
 2. Configure DigitalOcean Docker Image
 

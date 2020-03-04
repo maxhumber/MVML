@@ -1,13 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
 <form action = "/result" method="POST">
-  <h3>📦 you already like</h3>
-  <br />
   <div class="form-group">
-    <textarea class="form-control" rows="3" type="text" name="repos" placeholder="{{ random_repos }}"></textarea>
-    <!-- <input class="form-control input-lg" id="inputlg" type="text" name="repos" value="{{ random_repos }}" /> -->
+    <label for="datepicker">Date:</label>
+    <div class="input-group date">
+      <input type="text" class="form-control" id="datepicker" placeholder="MM/DD/YYYY" name="date">
+    </div>
   </div>
-  <br />
-  <button type="submit" class="btn btn-primary">Go</button>
+  <div class="form-group">
+    <label for="origin">Origin:</label>
+    <select class="form-control" id="origin" name="origin">
+      <option value="Banglore">Banglore</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Kolkata">Kolkata</option>
+      <option value="Mumbai">Mumbai</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="destination">Destination:</label>
+    <select class="form-control" id="destination" name="destination">
+      <option value="Banglore">Banglore</option>
+      <option selected="selected" value="Chennai">Chennai</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Kolkata">Kolkata</option>
+      <option value="Mumbai">Mumbai</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="stops">Stops:</label>
+    <input class="form-control" type="number" id="stops" name="stops" value=0>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Go</button>
+  </div>
 </form>
+<script>
+  $('#datepicker').datepicker('setDate', 'now');
+</script>
 {% endblock %}

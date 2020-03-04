@@ -1,11 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-  <h3>📦 you might like</h3>
+  <h3>Predicted Price: {{ price }}</h3>
   <br />
-  <br />
-  {% for suggestion in suggestions %}
-  <p><a href="https://github.com/{{ suggestion }}">{{ suggestion }}</a></p>
-  {% endfor %}
+  <img src="{{ url_for('static', filename='fly_with_me.png') }}" alt="Sinatra" class="img-fluid"/>
 </div>
 {% endblock %}
