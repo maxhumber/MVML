@@ -114,13 +114,23 @@ docker build -t appimage .
 docker run -d --name appcontainer -p 80:80 appimage
 ```
 
+18. See if it works by visiting the server IPv4 address!
 
 
-17. 
-18. run:
-    	
-    stop:
-    	docker stop appcontainer
-    cleanup:
-    	docker rmi -f appimage &&\
-    	docker rm appcontainer
+
+**Tear Down**
+
+If you screwed up and need to kill the container:
+
+1. Stop the container:
+
+```
+docker stop appcontainer
+```
+
+2. And delete the image:
+
+```
+docker rmi -f appimage &&\
+docker rm appcontainer
+```

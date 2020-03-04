@@ -13,7 +13,7 @@ class DateEncoder:
         return self.transform(X)
 
 def clean_up():
-    subprocess.run('rm -rf .mummify .venv __pycache__ .ipynb_checkpoints__ mummify.log Procfile requirements.txt runtime.txt', shell=True)
+    subprocess.run('rm -rf .mummify .venv __pycache__ .ipynb_checkpoints mummify.log Procfile requirements.txt runtime.txt pipe.pkl', shell=True)
 
 if __name__ == '__main__':
     clean_up()
