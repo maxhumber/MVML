@@ -28,16 +28,16 @@ X = df[['date', 'origin', 'destination', 'stops']]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-# class DateEncoder:
-#     def fit(self, X, y=None):
-#         return self
-#     def transform(self, X):
-#         month = X.dt.month
-#         day_of_week = X.dt.dayofweek
-#         return pd.concat([month, day_of_week], axis=1)
-#     def fit_transform(self, X, y=None):
-#         self.fit(X)
-#         return self.transform(X)
+class DateEncoder:
+    def fit(self, X, y=None):
+        return self
+    def transform(self, X):
+        month = X.dt.month
+        day_of_week = X.dt.dayofweek
+        return pd.concat([month, day_of_week], axis=1)
+    def fit_transform(self, X, y=None):
+        self.fit(X)
+        return self.transform(X)
 
 mapper = DataFrameMapper([
     ('date', DateEncoder(), {'input_df': True}),
