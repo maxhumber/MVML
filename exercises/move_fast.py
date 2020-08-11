@@ -16,7 +16,7 @@ X, y, coef = make_regression(
     n_informative=1,
     noise=10,
     coef=True,
-    random_state=0
+    random_state=0,
 )
 
 np.random.seed(0)
@@ -24,13 +24,14 @@ X[:n_outliers] = 3 + 0.5 * np.random.normal(size=(n_outliers, 1))
 y[:n_outliers] = -3 + 10 * np.random.normal(size=n_outliers)
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.33, random_state=42)
+    X, y, test_size=0.33, random_state=42
+)
 
-model = LinearRegression() # TRY A DIFFERENT MODEL HERE
+model = LinearRegression()  # TRY A DIFFERENT MODEL HERE
 model.fit(X_train, y_train)
 model.score(X_test, y_test)
 
-with open('exercises/model.pkl', 'wb') as f:
+with open("exercises/model.pkl", "wb") as f:
     pickle.dump(model, f)
 
 # <LOG MUMMIFY HERE>

@@ -1,41 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
 <form action = "/result" method="POST">
-  <div class="form-group">
-    <label for="datepicker">Date:</label>
-    <div class="input-group date">
-      <input type="text" class="form-control" id="datepicker" placeholder="MM/DD/YYYY" name="date">
-    </div>
+
+  <div>
+    <label for="color">Color</label>
+    <input type="color" id="color" name="color" value="#e66465">
   </div>
-  <div class="form-group">
-    <label for="origin">Origin:</label>
-    <select class="form-control" id="origin" name="origin">
-      <option value="Banglore">Banglore</option>
-      <option value="Chennai">Chennai</option>
-      <option value="Delhi">Delhi</option>
-      <option value="Kolkata">Kolkata</option>
-      <option value="Mumbai">Mumbai</option>
-    </select>
+
+  <div>
+    <label for="diameter">Diameter (cm)</label>
+    <input type="range" min="3" max="17" value="10" class="slider" id="diameter" name="diameter">
   </div>
-  <div class="form-group">
-    <label for="destination">Destination:</label>
-    <select class="form-control" id="destination" name="destination">
-      <option value="Banglore">Banglore</option>
-      <option selected="selected" value="Chennai">Chennai</option>
-      <option value="Delhi">Delhi</option>
-      <option value="Kolkata">Kolkata</option>
-      <option value="Mumbai">Mumbai</option>
-    </select>
+
+  <div>
+    <label for="weight">Weight (g)</label>
+    <input type="range" min="85" max="265" value="175" class="slider" id="weight" name="weight">
   </div>
-  <div class="form-group">
-    <label for="stops">Stops:</label>
-    <input class="form-control" type="number" id="stops" name="stops" value=0>
+
+  <div>
+    <button type="submit">Go</button>
   </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Go</button>
-  </div>
+
 </form>
-<script>
-  $('#datepicker').datepicker('setDate', 'now');
-</script>
 {% endblock %}

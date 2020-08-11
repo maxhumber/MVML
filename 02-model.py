@@ -1,47 +1,41 @@
 import pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import LabelBinarizer
+from sklearn.preprocessing import StandardScaler
 from sklearn_pandas import DataFrameMapper
-from sklearn.linear_model import LinearRegression, Lasso, RANSACRegressor
-from utils import DateEncoder
+from sklearn.svm import SVC
+from sklearn.pipeline import make_pipeline
+from utils import HexTransformer
 
 import mummify
 
-df = pd.read_excel('data/train.xlsx')
+df = pd.read_csv("data/citrus.csv")
+target = "fruit"
+y = df[target]
+X = df.drop(target, axis=1)
 
-df.columns = [c.lower() for c in df.columns]
-df['date_of_journey'] = df['date_of_journey'].apply(pd.to_datetime)
-df['price'] = df['price'].apply(lambda x: round(x * 0.014))
-df['total_stops'] = df['total_stops'].apply(
-    lambda x: pd.to_numeric(str(x).split(' ')[0], errors='coerce')
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=42
 )
-df['total_stops'] = df['total_stops'].fillna(0)
-df = df.rename(columns={
-    'date_of_journey': 'date',
-    'total_stops': 'stops',
-    'source': 'origin'
-})
 
-y = df['price']
-X = df[['date', 'origin', 'destination', 'stops']]
+mapper = DataFrameMapper(
+    [
+        ("hexcode", HexTransformer(), {"input_df": True}),
+        (["diameter"], StandardScaler()),
+        (["weight"], StandardScaler()),
+    ],
+    df_out=True,
+)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+Z_train = mapper.fit_transform(X_train)
+Z_test = mapper.transform(X_test)
 
-mapper = DataFrameMapper([
-    ('date', DateEncoder(), {'input_df': True}),
-    ('origin', LabelBinarizer()),
-    ('destination', LabelBinarizer()),
-    ('stops', None)
-], df_out=True)
-
-model = LinearRegression()
+model = SVC()
 pipe = make_pipeline(mapper, model)
 pipe.fit(X_train, y_train)
 score = pipe.score(X_test, y_test)
 
-with open('pipe.pkl', 'wb') as f:
+with open("pipe.pkl", "wb") as f:
     pickle.dump(pipe, f)
 
-mummify.log(f'R2 Score: {round(score, 4)}')
+mummify.log(f"Accuracy: {round(score, 4)}")

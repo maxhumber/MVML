@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-  <h3>Predicted Price: {{ price }}</h3>
-  <br />
-  <img src="{{ url_for('static', filename='fly_with_me.png') }}" alt="Sinatra" class="img-fluid"/>
+  {% if orange %}
+  <img width="200" src="{{ url_for('static', filename='orange.jpg') }}" alt="orange"/>
+  {% else %}
+  <img width="200" src="{{ url_for('static', filename='grapefruit.jpg') }}" alt="grapefruit"/>
+  {% endif %}
 </div>
 {% endblock %}
