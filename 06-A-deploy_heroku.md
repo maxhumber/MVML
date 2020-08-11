@@ -15,7 +15,7 @@ source .venv/bin/activate
 3. Install app and model dependencies (`gunicorn` will always be required):
 
 ```
-pip install gunicorn flask scikit-learn pandas xlrd sklearn_pandas mummify 
+pip install gunicorn flask scikit-learn pandas sklearn_pandas mummify 
 ```
 
 3. Freeze the dependencies:
@@ -40,7 +40,7 @@ python 05-app.py
 
 ```
 python --version
-echo "python-3.7.4" >> runtime.txt
+echo "python-3.7.6" >> runtime.txt
 ```
 
 7. Create a `Procfile`:
