@@ -1,7 +1,7 @@
 import pickle
 from flask import Flask, request, render_template
 import pandas as pd
-from utils import DateEncoder
+from utils import HexTransformer
 
 app = Flask(__name__, template_folder="templates")
 
@@ -21,17 +21,17 @@ def index():
 @app.route("/result", methods=["POST"])
 def predict():
     form = request.form
+    print(form)
     new = pd.DataFrame(
         {
-            "date": [pd.Timestamp(form["date"])],
-            "origin": [form["origin"]],
-            "destination": [form["destination"]],
-            "stops": [form["stops"]],
+            "diameter": [float(form["diameter"])],
+            "weight": [float(form["weight"])],
+            "hexcode": [form["color"]],
         }
     )
-    price = int(round(pipe.predict(new)[0], -1))
-    price = "${:,.2f}".format(price)
-    return render_template("result.html", price=price)
+    fruit = pipe.predict(new)[0]
+    orange = fruit == 'orange'
+    return render_template("result.html", orange=orange)
 
 
 if __name__ == "__main__":
