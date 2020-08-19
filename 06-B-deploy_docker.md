@@ -86,11 +86,11 @@ ssh mvml@142.93.XXX.104
 wget https://github.com/maxhumber/mvml/archive/master.zip
 ```
 
-14. Unzip and rename (I've called this app `flightomatic`:
+14. Unzip and rename (I've called this app `oranginator`:
 
 ```
 unzip master.zip
-mv MVML-master flightomatic
+mv MVML-master oranginator
 rm -f master.zip
 ```
 
@@ -99,7 +99,7 @@ rm -f master.zip
 15. Move into the app:
 
 ```
-cd flightomatic
+cd oranginator
 ```
 
 16. Build the app image:

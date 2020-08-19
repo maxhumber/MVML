@@ -40,7 +40,7 @@ python 05-app.py
 
 ```
 python --version
-echo "python-3.7.6" >> runtime.txt
+echo "python-3.8.3" >> runtime.txt
 ```
 
 7. Create a `Procfile`:

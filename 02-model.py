@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn_pandas import DataFrameMapper
-from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.pipeline import make_pipeline
 from utils import HexTransformer
 
@@ -30,7 +30,7 @@ mapper = DataFrameMapper(
 Z_train = mapper.fit_transform(X_train)
 Z_test = mapper.transform(X_test)
 
-model = SVC()
+model = KNeighborsClassifier(n_neighbors=4)
 pipe = make_pipeline(mapper, model)
 pipe.fit(X_train, y_train)
 score = pipe.score(X_test, y_test)
