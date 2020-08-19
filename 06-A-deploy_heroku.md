@@ -1,4 +1,4 @@
-### Deploy Heroku
+### Deploy to Heroku
 
 1. Setup a virtual environment:
 
@@ -40,7 +40,7 @@ python 05-app.py
 
 ```sh
 python --version
-echo "python-3.7.4" >> runtime.txt
+echo "python-3.7.6" >> runtime.txt
 ```
 
 7. Create a `Procfile`:
@@ -51,43 +51,43 @@ echo "web: gunicorn 05-app:app --log-file -" >> Procfile
 
 8. If your project isn't already a git repo, make it one:
 
-```
+```sh
 git init
 ```
 
 9. Login to Heroku from the [command line](https://devcenter.heroku.com/articles/heroku-cli):
 
-```
+```sh
 heroku login
 ```
 
 10. Create a project:
 
-```
+```sh
 heroku create
 ```
 
 11. Add a remote to the randomly generated project:
 
-```
+```sh
 heroku git:remote -a silly-words-009900
 ```
 
 12. Test the app locally:
 
-```
+```sh
 heroku local
 ```
 
 13. (Optional) Deactivate the virtual environment:
 
-```
+```sh
 deactivate
 ```
 
 14. add, commit push:
 
-```
+```sh
 git add .
 git commit -m '🚀'
 git push heroku master
