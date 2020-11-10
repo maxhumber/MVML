@@ -21,7 +21,7 @@ class HexTransformer:
 
 def clean_up():
     subprocess.run(
-        "rm -rf .mummify .venv __pycache__ .ipynb_checkpoints mummify.log Procfile requirements.txt runtime.txt pipe.pkl",
+        "rm -rf .mummify .venv __pycache__ .ipynb_checkpoints mummify.log Procfile requirements.txt runtime.txt pipe.pkl Dockerfile",
         shell=True,
     )
 
