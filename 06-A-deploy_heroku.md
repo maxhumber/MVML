@@ -36,11 +36,11 @@ python 02-model.py
 python 05-app.py
 ```
 
-6. Specify a python runtime (3.8.x not yet available!):
+6. Specify a python runtime:
 
 ```sh
 python --version
-echo "python-3.7.6" >> runtime.txt
+echo "python-3.8.6" >> runtime.txt
 ```
 
 7. Create a `Procfile`:
